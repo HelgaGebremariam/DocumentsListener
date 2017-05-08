@@ -9,9 +9,9 @@ namespace DocumentsListeningService.Helpers
 {
     public static class PathHelper
     {
-        public static string GetUniqueFileName(string filePath, string fileName)
+        public static string GetUniqueFileName(string filePath, string fileName, string extension)
         {
-            var resultFileName = fileName;
+            var resultFileName = Path.ChangeExtension(fileName, extension);
             var counter = 0;
             while (File.Exists(Path.Combine(filePath, resultFileName)))
             {

@@ -17,8 +17,6 @@ namespace TextRecognition
 
             if (text?.Regions == null) return;
 
-            filePath = Path.ChangeExtension(filePath, "txt");
-
             using (var streamWriter = File.CreateText(filePath))
             {
                 foreach (var item in text.Regions)

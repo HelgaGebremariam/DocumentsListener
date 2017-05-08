@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TextRecognition.Interface;
 using DocumentsListeningService.Helpers;
+using NLog;
 
 namespace DocumentsListeningService
 {
@@ -16,6 +17,7 @@ namespace DocumentsListeningService
 
         private readonly IDocumentCreator _documentCreator;
         private readonly IImageTextReader _imageTextReader;
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public ImageTextReaderProcessor(IDocumentCreator documentCreator, IImageTextReader imageTextReader)
         {
@@ -26,7 +28,9 @@ namespace DocumentsListeningService
         public async Task ProceedDocument(string fileName)
         {
             var recognitionResults = await _imageTextReader.ReadTextFromImage(fileName);
-            _documentCreator.SaveAsDocument(recognitionResults, PathHelper.GetUniqueFileName(OutputDirectory, Path.GetFileName(fileName)));
+            var outputFileName = PathHelper.GetUniqueFileName(OutputDirectory, Path.GetFileName(fileName), "txt");
+            _documentCreator.SaveAsDocument(recognitionResults, outputFileName);
+            _logger.Info("Saved text file: " + outputFileName);
         }
     }
 }

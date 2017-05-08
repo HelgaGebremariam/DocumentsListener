@@ -12,7 +12,16 @@ namespace DocumentsListeningServiceRunner
     {
         static void Main(string[] args)
         {
-            HostFactory.Run(x => x.Service<DocumentsListenerService>());
+            HostFactory.Run(x =>
+            {
+                x.Service<DocumentsListenerService>();
+                x.SetServiceName("DocumentsListener");
+                x.SetDisplayName("Documents Recognizer");
+                x.StartAutomatically();
+                x.EnableServiceRecovery(
+                    r => r.RestartService(1).RestartService(1));
+                x.RunAsLocalService();
+            });
         }
     }
 }

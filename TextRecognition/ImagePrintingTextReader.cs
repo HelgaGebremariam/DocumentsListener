@@ -39,11 +39,6 @@ namespace TextRecognition
                     return result;
                 }
             }
-            catch (ClientException e)
-            {
-                _logger.Error(e.Message);
-                return null;
-            }
             catch (Exception e)
             {
                 _logger.Error(e.Message);
